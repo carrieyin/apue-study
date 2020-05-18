@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 
     FILE *fp;
 
-    //printf("argc:%d argv[0]: %s---  argv[1]---%s\n", argc, argv[0],argv[1]);
+    printf("argc:%d argv[0]: %s---  argv[1]---%s\n", argc, argv[0],argv[1]);
     if(argc != 2)
     {
         printf("usage: a.out <pathname> \n");
