@@ -19,18 +19,18 @@ int main()
     while ((n = read(STDIN_FILENO, line, MAXLINE)) > 0)
     {
         line[n] = 0;
-        printf("n is %d \n",n);
+        //printf("n is %d \n",n);
         //char line[6] = "12 34";
-        printf("string is %s", string(line).c_str());
+        printf("string is %s \n", string(line).c_str());
         int temp = sscanf(line, "%d%d", &int1, &int2);
         //printf("%d\n", temp);
         if(temp == 2)
         {
-            sprintf(line, "%d", int1 + int2);
+            sprintf(line, "%d\n", int1 + int2);
             n = strlen(line);
             if(write(STDOUT_FILENO, line, n) != n)
             {
-
+                perror("write error");
             }
         }
         else
