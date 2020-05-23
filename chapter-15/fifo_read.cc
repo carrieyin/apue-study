@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
         printf("make fifo failed!\n");
         return 1;
     }
-
+    
     char buf[256] = {0};
     int fd = open("my_fifo",O_RDONLY);
     read(fd,buf,256);
