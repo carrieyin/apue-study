@@ -6,6 +6,7 @@
 using namespace std;
 #define MAXLINE 4096
 
+// demo
 int main()
 {
     int n, int1, int2;
