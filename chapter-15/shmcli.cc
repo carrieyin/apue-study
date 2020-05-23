@@ -6,6 +6,7 @@
 #include<sys/ipc.h>
 #include<sys/wait.h>
 #include<string.h>
+
 //指定信号量的KEY
 #define IPC_KEY 0x12345678 
  
