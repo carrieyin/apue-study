@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 
 
     char *hostname;
-    struct addrinfo hints,*result, *rp;
+    struct addrinfo hints, *result, *rp;
     int err;
     in_addr addr;
 
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     memset(&hints, 0, sizeof(addrinfo));
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_family = AF_INET;
-
+    //hints.ai_flags = AI_CANONNAME | AI_NUMERICHOST;
 
     if((err = getaddrinfo(hostname, NULL, &hints, &result)) != 0){
         printf("error %d : %s\n", err, gai_strerror(err));
@@ -43,6 +43,21 @@ int main(int argc, char **argv)
     for (rp = result; rp != NULL; rp = rp->ai_next) {
         addr.s_addr = ((sockaddr_in*)(rp->ai_addr))->sin_addr.s_addr;
         printf("ip addresss: %s\n", inet_ntoa(addr));
+    }
+
+    struct addrinfo* res_p;
+    for(res_p = result; res_p != NULL; res_p = res_p->ai_next)
+    {
+            char host[1024] = {0};
+            int ret = getnameinfo(res_p->ai_addr, res_p->ai_addrlen, host, sizeof(host), NULL, 0, NI_NAMEREQD);
+            if(ret != 0)
+            {
+                    printf("getnameinfo: %s\n", gai_strerror(ret));
+            }
+            else
+            {
+                    printf("hostname: %s\n", host);
+            }
     }
 
     freeaddrinfo(result);
