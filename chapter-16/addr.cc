@@ -13,15 +13,18 @@
 
 int main(int argc, char **argv)
 {
-    /*struct hostent* phost = gethostent();
+    struct hostent* phost = gethostent();
     printf("host name: %s\n", phost->h_name);
     printf("addr type: %d \n", phost->h_addrtype);
     printf("addr aliases: %s \n", phost->h_aliases);
 
     struct netent * pnet = getnetent();
-    printf("net name: %s \n", pnet->n_name);*/
+    printf("net name: %s \n", pnet->n_name);
 
-
+    //获取主机名
+    char* host = (char *)malloc(128);
+    gethostname(host, 128);
+    printf("host is: %s \n", host);
     char *hostname;
     struct addrinfo hints, *result, *rp;
     int err;
@@ -49,7 +52,7 @@ int main(int argc, char **argv)
     for(res_p = result; res_p != NULL; res_p = res_p->ai_next)
     {
             char host[1024] = {0};
-            int ret = getnameinfo(res_p->ai_addr, res_p->ai_addrlen, host, sizeof(host), NULL, 0, NI_NAMEREQD);
+            int ret = getnameinfo(res_p->ai_addr, res_p->ai_addrlen, host, sizeof(host), NULL, 0,  NI_NUMERICSERV);
             if(ret != 0)
             {
                     printf("getnameinfo: %s\n", gai_strerror(ret));
