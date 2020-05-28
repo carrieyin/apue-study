@@ -71,9 +71,11 @@ serve(int sockfd)
 
     //set_cloexec(sockfd);
     for (;;) {
+        printf("ready to accect \n");
         if ((clfd = accept(sockfd, NULL, NULL)) < 0) {
             syslog(LOG_ERR, "ruptimed: accept error: %s",
               strerror(errno));
+              printf("accect error \n");
             exit(1);
         }
         //set_cloexec(clfd);
@@ -168,7 +170,9 @@ main(int argc, char *argv[])
         err_sys("malloc error");
     if (gethostname(host, n) < 0)
         err_sys("gethostname error");
-    daemonize("ruptimed");
+    
+    printf("server process ----host is:%s \n", host);
+    //daemonize("ruptimed");
     memset(&hint, 0, sizeof(hint));
     hint.ai_flags = AI_CANONNAME;
     hint.ai_socktype = SOCK_STREAM;
@@ -178,6 +182,7 @@ main(int argc, char *argv[])
     if ((err = getaddrinfo(host, "ruptime", &hint, &ailist)) != 0) {
         syslog(LOG_ERR, "ruptimed: getaddrinfo error: %s",
           gai_strerror(err));
+          printf("get addr error  %s---- \n", gai_strerror(err));
         exit(1);
     }
     for (aip = ailist; aip != NULL; aip = aip->ai_next) {
